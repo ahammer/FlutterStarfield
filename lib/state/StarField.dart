@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mysassa/state/Constants.dart';
 
 class StarField {
   List<Star> stars = [];
@@ -17,6 +18,7 @@ class Star {
   final y = starRandom.nextDouble();
   final xs = starRandom.nextDouble();
 }
+final startTime = DateTime.now().millisecondsSinceEpoch;
 
 class StarLayoutDelegate extends MultiChildLayoutDelegate {
   final StarField starField;
@@ -24,19 +26,26 @@ class StarLayoutDelegate extends MultiChildLayoutDelegate {
 
   @override
   void performLayout(Size size) {
-    starField.stars.forEach((s) => positionChild(s, Offset(s.x * size.width,s.y * size.height)));
-    starField.stars.forEach((s) => layoutChild(s, BoxConstraints.tight(Size(10,10))));
 
+    starField.stars.forEach((s)  {
+
+      double x = s.x + (s.xs * (DateTime.now().millisecondsSinceEpoch - startTime) / 5000.0);
+      if (x > 1) {
+        x = x - x.floor();
+      }
+      x = 1-x;
+
+      positionChild(s, Offset(x * size.width,s.y * size.height));
+
+    });
+    starField.stars.forEach((s) => layoutChild(s, BoxConstraints.tight(Size(10,10))));
   }
 
   @override
-  bool shouldRelayout(MultiChildLayoutDelegate oldDelegate) {
-    return false;
-  }
-
+  bool shouldRelayout(MultiChildLayoutDelegate oldDelegate) => true;
 }
 
 List<Widget> getStars(StarField sf) {
-  return sf.stars.map((star) => LayoutId(id:star, child:Container(color:Colors.white, width: 10, height: 10,))).toList();
+  return sf.stars.map((star) => LayoutId(id:star, child:Image.asset("assets/star.png", width: Constants.STAR_SIZE_W * star.xs, height: Constants.STAR_SIZE_H * star.xs,))).toList();
 }
 
