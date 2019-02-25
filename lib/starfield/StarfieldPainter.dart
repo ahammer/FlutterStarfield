@@ -38,13 +38,20 @@ class StarFieldPainter extends CustomPainter {
     starField.stars.take(numStars.floor()).forEach((s) {
       double x = s.x + (s.xs * (DateTime
           .now()
-          .millisecondsSinceEpoch - startTime) / 5000.0);
+          .millisecondsSinceEpoch - startTime) / 50000.0);
       if (x > 1) x -= x.floor();
       starPaint.color = Color.fromARGB(s.alpha,s.red,s.green,s.blue);
 
       Offset center = Offset(x * size.width, s.y * size.height);
-      double height = 1 + (s.xs / 5);
-      double length = 2*s.xs;
+
+      double scale = 1;
+      if (x < 0.1) scale = x*10;
+      if (x > 0.9) scale = (1-x) * 10;
+
+      double height = 0.5 + (s.xs / 10);
+      double length = 1+ s.xs;
+      height *= scale;
+      length *= scale;
 
       var topLeft = center.translate(-length/2, -height/2);
       var bottomRight = center.translate(length/2, height/2);
