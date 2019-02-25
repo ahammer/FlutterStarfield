@@ -19,6 +19,5 @@ class Star {
   final red = starRandom.nextInt(50) + 205;
   final green = starRandom.nextInt(50) + 205;
   final blue = starRandom.nextInt(50) + 205;
-
 }
 
