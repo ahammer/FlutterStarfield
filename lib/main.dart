@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mysassa/widgets/MainScreen.dart';
+import 'package:flutter_mysassa/widgets/MainScreen/MainScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue,),
-      home: MainScream(title: 'Flutter Demo Home Page'),
+      home: MainScreen(title: 'Space Simulation'),
     );
   }
 }
