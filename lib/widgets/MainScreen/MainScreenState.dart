@@ -6,7 +6,8 @@ import 'package:flutter_mysassa/widgets/MainScreen/MainScreenBody.dart';
 import 'package:flutter_mysassa/widgets/MainScreen/MainScreenFooter.dart';
 import 'package:flutter_mysassa/widgets/MainScreen/MainScreenInteractions.dart';
 
-class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin implements MainScreenInteractions {
+
+class MainScreenState extends State<MainScreen2> with SingleTickerProviderStateMixin implements MainScreenInteractions {
   final String title;
   final StarField starField = StarField(15000);
   double numStars = 100;
@@ -24,7 +25,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: getBody(starField, numStars),
-      bottomSheet: getFooter(numStars, this),
+      bottomSheet: getFooter(),
     );
   }
 
@@ -47,5 +48,13 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
 
   void _refresh() {
     setState(() {});
+  }
+}
+
+class MainScreen2 extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return null;
   }
 }

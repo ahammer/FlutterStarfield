@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mysassa/starfield/StarField.dart';
 import 'package:flutter_mysassa/widgets/MainScreen/MainScreen.dart';
+import 'package:flutter_mysassa/widgets/MainScreen/MainScreenRedux.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,10 +11,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final store = Store<MainScreenReduxState>(reducer, initialState: MainScreenReduxState(100, StarField(5000)));
+    return StoreProvider<MainScreenReduxState>(
+        store: store,
+        child: MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue,),
-      home: MainScreen(title: 'Space Simulation'),
+      home: MainScreen(title: 'Space Simulation'))
     );
   }
 }
