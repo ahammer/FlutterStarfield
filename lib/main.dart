@@ -11,8 +11,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final store = Store<MainScreenReduxState>(reducer, initialState: MainScreenReduxState(100, StarField(5000)));
-    return StoreProvider<MainScreenReduxState>(
+    final store = Store<MainScreenStore>(reducer, initialState: MainScreenStore(100, StarField(5000)));
+    return StoreProvider<MainScreenStore>(
         store: store,
         child: MaterialApp(
       title: 'Flutter Demo',

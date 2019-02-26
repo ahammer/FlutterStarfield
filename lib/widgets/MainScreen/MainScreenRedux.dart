@@ -1,9 +1,9 @@
 import 'package:flutter_mysassa/starfield/StarField.dart';
 
-class MainScreenReduxState {
+class MainScreenStore {
   final double stars;
   final StarField starField;
-  MainScreenReduxState(this.stars, this.starField);
+  MainScreenStore(this.stars, this.starField);
 }
 
 class ChangeStarCount {
@@ -11,9 +11,9 @@ class ChangeStarCount {
   ChangeStarCount(this.starCount);
 }
 
-MainScreenReduxState reducer(MainScreenReduxState state, action) {
+MainScreenStore reducer(MainScreenStore state, action) {
   if (action is ChangeStarCount) {
-    return MainScreenReduxState(action.starCount, state.starField);
+    return MainScreenStore(action.starCount, state.starField);
   }
   return state;
 }
