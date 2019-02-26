@@ -15,7 +15,7 @@ class MainScreen extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: getBody(StarField(100), 100),
+      body: getBody(),
       bottomSheet: getFooter(),
     );;
   }

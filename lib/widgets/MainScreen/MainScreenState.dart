@@ -24,7 +24,7 @@ class MainScreenState extends State<MainScreen2> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: getBody(starField, numStars),
+      body: getBody(),
       bottomSheet: getFooter(),
     );
   }

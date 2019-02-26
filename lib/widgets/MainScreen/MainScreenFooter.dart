@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_mysassa/widgets/MainScreen/MainScreenRedux.dart';
+import 'package:flutter_mysassa/widgets/MainScreen/MainScreenStore.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
