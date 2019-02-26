@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final store = Store<MainScreenStore>(reducer, initialState: MainScreenStore(100, StarField(5000)));
+    final store = Store<MainScreenStore>(reducer, initialState: MainScreenStore(100, StarField(20000)));
     return StoreProvider<MainScreenStore>(
         store: store,
         child: MaterialApp(

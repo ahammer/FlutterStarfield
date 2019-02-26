@@ -26,7 +26,7 @@ Widget getFooter() => StoreConnector<MainScreenStore, FooterViewModel>(
                     child: Slider(
                         value: viewModel.count,
                         min: 0,
-                        max: 8000,
+                        max: 20000,
                         onChanged: (progress) {
                           viewModel.setStarCount(progress);
                         }))),

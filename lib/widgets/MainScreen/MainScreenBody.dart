@@ -11,11 +11,44 @@ class MainScreenViewModel {
   MainScreenViewModel(this.count, this.starField);
 }
 
-Widget getBody() => StoreConnector<MainScreenStore, MainScreenViewModel>(
-converter: (store) => MainScreenViewModel(store.state.stars, store.state.starField),
-builder: (context, viewModel) =>
-    Stack(children: <Widget>[
-      getBackground(),
-      CustomPaint(
-          painter: StarFieldPainter(viewModel.starField, viewModel.count), size: Size.infinite),
-    ]));
+Widget getBody() => Stack(
+    children: <Widget>[getBackground(), StarFieldContainingStatefulWidget()]);
+
+class StarFieldContainingStatefulWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return StarFieldState();
+  }
+}
+
+class StarFieldState extends State<StarFieldContainingStatefulWidget>
+    with SingleTickerProviderStateMixin {
+  Animation<double> animation;
+  AnimationController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<MainScreenStore, MainScreenViewModel>(
+        converter: (store) =>
+            MainScreenViewModel(store.state.stars, store.state.starField),
+        builder: (context, viewModel) =>
+            CustomPaint(
+                painter: StarFieldPainter(viewModel.starField, viewModel.count), size: Size.infinite));}
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(duration: const Duration(days: 1000), vsync: this);
+    animation = Tween<double>(begin: 0, end: 300).animate(controller)
+      ..addListener(() {
+        setState(() {});
+      });
+    controller.forward();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+}
