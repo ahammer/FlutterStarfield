@@ -1,4 +1,7 @@
 import 'dart:math';
+import 'dart:ui';
+
+import 'package:vector_math/vector_math_64.dart';
 
 final startTime = DateTime.now().millisecondsSinceEpoch;
 class StarField {
@@ -12,12 +15,12 @@ class StarField {
 
 Random starRandom = Random.secure();
 class Star {
-  final x = starRandom.nextDouble();
-  final y = starRandom.nextDouble();
-  final xs = pow(starRandom.nextDouble(),3) * 10;
+  final position = Vector3(starRandom.nextDouble(), starRandom.nextDouble(), starRandom.nextDouble());
   final alpha = starRandom.nextInt(128) + 128;
   final red = starRandom.nextInt(50) + 205;
   final green = starRandom.nextInt(50) + 205;
   final blue = starRandom.nextInt(50) + 205;
+  final screenVector = Vector3.zero();
+  final screenOffset = Offset.zero;
 }
 

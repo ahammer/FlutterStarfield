@@ -10,7 +10,6 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
       body: getBody(),
       bottomSheet: getFooter(),
     );;

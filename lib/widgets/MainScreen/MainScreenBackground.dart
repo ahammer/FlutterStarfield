@@ -19,6 +19,8 @@ getBackground() {
   int blue = (cos(c + c2) * 50).floor() + 205;
   Color color = Color.fromARGB(alpha, red, green, blue);
 
+  return Container(color: Colors.black);
+  /*
   return Transform.scale(
       scale: cos((a + b + c + a2 + b2 + c2) / 20.0) / 5.0 + 1.2,
       child: Image.asset("assets/space.jpg",
@@ -27,4 +29,5 @@ getBackground() {
           width: double.infinity,
           color: color,
           colorBlendMode: BlendMode.multiply));
+          */
 }
