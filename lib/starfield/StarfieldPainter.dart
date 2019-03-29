@@ -17,7 +17,7 @@ class StarFieldPainter extends CustomPainter {
 
 
   Matrix4 perspective = Matrix4.identity()
-    ..setEntry(3, 2, 0.0045); // perspective;
+    ..setEntry(3, 2, 0.005); // perspective;
 
   static double offset = 0.5;
   static double scale = 2000;
@@ -27,48 +27,52 @@ class StarFieldPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var screenOffset = Vector3(size.width / 2, size.height / 2, 0);
-    var time = (DateTime.now().millisecondsSinceEpoch) / 5000.0;
+    var time = (DateTime.now().millisecondsSinceEpoch) / 6000.0;
     var cameraPosition =
-        Vector3(cos(time * 0.5) / 3, cos(time * 0.3) / 3, cos(time) / 3);
+        Vector3(cos(time * 2)/5, cos(time * 3)/5, cos(time)/5);
 
     var rx = cos(time/10)*20;
     var ry = cos((time+123)/15)*30;
     var rz = cos((time+453)/20)*40;
-
 
     Matrix4 camera = Matrix4.identity()
       ..rotateX(rx)
       ..rotateY(ry)
       ..rotateZ(rz);
 
-    starField.stars
-        .take(numStars.floor())
-        .map((star) { //Transform each star
-          Vector3 currentPoint = star.screenVector;
-          currentPoint.setFrom(star.position);
-          currentPoint.add(localOffset);
-          currentPoint.add(cameraPosition);
-          currentPoint.multiply(localScale);
-          currentPoint.applyMatrix4(camera);
-          currentPoint.applyProjection(perspective);
-          currentPoint.add(screenOffset);
-          return star;
-        })
-        .where((pos) =>     //Cull invisible stars
-            pos.screenVector.z < 255 &&
-            pos.screenVector.x > 0 &&
-            pos.screenVector.x < size.width &&
-            pos.screenVector.y > 0 &&
-            pos.screenVector.y < size.height)
-        .forEach((star) {     //Draw each star
-          Offset center = Offset(star.screenVector.x, star.screenVector.y);
-          double distance = 255 - star.screenVector.z;
-          if (distance > 255) distance = 255;
-          if (distance < 0) distance = 0;
-          int color = distance.round();
-          starPaint.color = Color.fromARGB(255, color, color, color);
-          canvas.drawPoints(PointMode.points, [center], starPaint);
-        });
+
+      starField.stars
+          .take(numStars.floor())
+          .map((star) { //Transform each star
+        Vector3 currentPoint = star.screenVector;
+        currentPoint.setFrom(star.position);
+        currentPoint.add(localOffset);
+        currentPoint.add(cameraPosition);
+        currentPoint.multiply(localScale);
+        currentPoint.applyMatrix4(camera);
+        return star;
+      })
+          .where((pos) => pos.screenVector.z > -0)
+          .map((star) {
+            star.z = star.screenVector.z;
+            star.screenVector.applyProjection(perspective);
+            star.screenVector.add(screenOffset);
+            star.screenOffset = Offset(star.screenVector.x, star.screenVector.y);
+            return star;
+          }).where((star)=>star.screenOffset.dx > 0 && star.screenOffset.dy > 0 && star.screenOffset.dx < size.width && star.screenOffset.dy < size.height)
+    .forEach((star) {
+        double maxDistance = 1200;
+        double d = maxDistance-star.z;
+        if (d>maxDistance) return;
+        if (d<0) d = 0;
+        d /= maxDistance;
+        var c = (d * 255).round();
+        starPaint.color = Color.fromARGB(255,c,c,c);
+        canvas.drawPoints(PointMode.points, [star.screenOffset], starPaint);
+      });
+
+
+
   }
 
   @override
