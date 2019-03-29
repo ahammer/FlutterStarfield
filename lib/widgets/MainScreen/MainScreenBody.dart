@@ -32,17 +32,14 @@ class StarFieldState extends State<StarFieldContainingStatefulWidget>
         converter: (store) =>
             MainScreenViewModel(store.state.stars, store.state.starField),
         builder: (context, viewModel) =>
-            CustomPaint(
-                painter: StarFieldPainter(viewModel.starField, viewModel.count), size: Size.infinite));}
+            AnimatedBuilder(animation: controller, builder:(_, child) => CustomPaint(
+                painter: StarFieldPainter(viewModel.starField, viewModel.count), size: Size.infinite)));}
 
   @override
   void initState() {
     super.initState();
     controller = AnimationController(duration: const Duration(days: 1000), vsync: this);
-    animation = Tween<double>(begin: 0, end: 300).animate(controller)
-      ..addListener(() {
-        setState(() {});
-      });
+    animation = Tween<double>(begin: 0, end: 300).animate(controller);
     controller.forward();
   }
 
