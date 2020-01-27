@@ -4,9 +4,9 @@ A flutter based starfield simulator
 
 To Run
 
-cd flutter_starfield
-flutter create .
-flutter run
+    cd flutter_starfield
+    flutter create .
+    flutter run
 
 
 Deprecated:
